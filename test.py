@@ -3,23 +3,21 @@ from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.by import By
 from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import Select
 from selenium.common.exceptions import NoSuchElementException
-import time
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
 
 driver.get("https://www.theverge.com/")
 driver.maximize_window()
 driver.implicitly_wait(10)
-for i in range(2, 22):
+for i in range(1, 39):
     driver.find_element(By.XPATH, f'(//h2[@class="c-entry-box--compact__title"]//a)[{i}]').send_keys(Keys.CONTROL,
                                                                                                      Keys.ENTER)
     driver.implicitly_wait(2)
     driver.switch_to.window(driver.window_handles[1])
     driver.implicitly_wait(2)
     title = driver.find_element(By.XPATH, '//h1[@class="c-page-title"]').text
-    if title == 'The Great Fiction of AI':
+    if title == 'The Great Fiction of AI' or title == 'Dungeons & Dragons: Honor Among Thieves looks like a celebrity-filled LARP in first trailer':
         continue
     content = driver.find_element(By.XPATH, '//div[@class="c-entry-content "]').text
     with open('post_img.png', 'wb') as file:
@@ -33,7 +31,7 @@ for i in range(2, 22):
     driver.switch_to.window(driver.window_handles[2])
     driver.implicitly_wait(5)
     driver.get('http://139.59.95.41:8000/addpost')
-    if i == 2:
+    if i == 1:
         driver.find_element(By.XPATH, '//input[@name="username"]').send_keys('parthshah5642@gmail.com')
         driver.find_element(By.XPATH, '//input[@name="password"]').send_keys('123')
         driver.find_element(By.XPATH, '//input[@class="button text-white"]').click()
