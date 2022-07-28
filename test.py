@@ -11,6 +11,8 @@ driver.get("https://www.theverge.com/")
 driver.maximize_window()
 driver.implicitly_wait(10)
 for i in range(1, 39):
+    # if i == 3 or i == 4:
+    #     continue
     driver.find_element(By.XPATH, f'(//h2[@class="c-entry-box--compact__title"]//a)[{i}]').send_keys(Keys.CONTROL,
                                                                                                      Keys.ENTER)
     driver.implicitly_wait(2)
