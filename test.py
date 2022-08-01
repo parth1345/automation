@@ -11,7 +11,7 @@ driver.get("https://www.theverge.com/")
 driver.maximize_window()
 driver.implicitly_wait(10)
 for i in range(1, 39):
-    # if i == 3 or i == 4:
+    # if i == 4:
     #     continue
     driver.find_element(By.XPATH, f'(//h2[@class="c-entry-box--compact__title"]//a)[{i}]').send_keys(Keys.CONTROL,
                                                                                                      Keys.ENTER)
@@ -19,11 +19,18 @@ for i in range(1, 39):
     driver.switch_to.window(driver.window_handles[1])
     driver.implicitly_wait(2)
     title = driver.find_element(By.XPATH, '//h1[@class="c-page-title"]').text
-    if title == 'The Great Fiction of AI' or title == 'Dungeons & Dragons: Honor Among Thieves looks like a celebrity-filled LARP in first trailer':
+    print(i)
+    if title == 'The Great Fiction of AI' or title == 'Dungeons & Dragons: Honor Among Thieves looks like a ' \
+                                                      'celebrity-filled LARP in first trailer':
         continue
     content = driver.find_element(By.XPATH, '//div[@class="c-entry-content "]').text
     with open('post_img.png', 'wb') as file:
-        img = driver.find_element(By.XPATH, '//picture[@class="c-picture"]/img')
+        try:
+            img = driver.find_element(By.XPATH, '//picture[@class="c-picture"]/img')
+        except NoSuchElementException:
+            img = driver.find_element(By.XPATH,
+                                      '//div[@class="ytp-cued-thumbnail-overlay"]//div['
+                                      '@class="ytp-cued-thumbnail-overlay-image"]')
         file.write(img.screenshot_as_png)
     driver.implicitly_wait(10)
     try:
